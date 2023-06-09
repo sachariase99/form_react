@@ -53,7 +53,7 @@ function MyForm() {
 
   return (
     <div className='flex justify-center items-center h-[100vh]'>
-      <form onSubmit={handleSubmit} className='bg-[#1a1a1a] text-white w-[400px] h-[400px] flex flex-col justify-center items-center p-10 '>
+      <form onSubmit={handleSubmit} className='bg-[#1a1a1a] text-white w-[400px] h-[400px] flex flex-col justify-center items-center p-10 rounded-xl'>
         <div className='flex flex-col w-[100%] text-center mb-2'>
           <input
             type="text"
