@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 function useFormValidator(initialState, validationRules) {
   const [values, setValues] = useState(initialState);
