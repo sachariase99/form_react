@@ -28,8 +28,7 @@ function MyForm() {
         message: 'Email is required.',
       },
       emailFormat: {
-        validate: (value) =>
-          /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(value),
+        validate: (value) => /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(value),
         message: 'Invalid email format.',
       },
     },
@@ -39,9 +38,8 @@ function MyForm() {
         message: 'Phone is required.',
       },
       phoneFormat: {
-        validate: (value) =>
-          /^\d{10}$/g.test(value),
-        message: 'Invalid phone number format. (10 digits)',
+        validate: (value) => /^\d{5,}$/g.test(value),
+        message: 'Invalid phone number format. (Above 5 digits)',
       },
     },
   };
@@ -55,7 +53,7 @@ function MyForm() {
     <div className='flex justify-center items-center h-[100vh]'>
       <div className='bg-[#1a1a1a] text-white w-[400px] h-[400px] p-10 rounded-xl'>
         <h1 className='mb-2 mt-[-30px] text-center text-[2rem] uppercase font-bold'>Form Validering</h1>
-        <form onSubmit={handleSubmit} className='flex flex-col justify-center items-center h-[100%]'>
+        <form onSubmit={handleSubmit} className='flex flex-col justify-center items-center h-[100%] text-black'>
           <div className='flex flex-col w-[100%] text-center mb-2'>
             <input
               type="text"
@@ -65,7 +63,7 @@ function MyForm() {
               placeholder='First Name'
               className='rounded-[15px] p-1 mb-2'
             />
-            {errors.name && <span>{errors.name}</span>}
+            {errors.name && <span className='text-white'>{errors.name}</span>}
           </div>
           <div className='flex flex-col w-[100%] text-center mb-2'>
             <input
@@ -76,7 +74,7 @@ function MyForm() {
               placeholder='Last Name'
               className='rounded-[15px] p-1 mb-2'
             />
-            {errors.lastName && <span>{errors.lastName}</span>}
+            {errors.lastName && <span className='text-white'>{errors.lastName}</span>}
           </div>
           <div className='flex flex-col w-[100%] text-center mb-2'>
             <input
@@ -87,7 +85,7 @@ function MyForm() {
               placeholder='Email'
               className='rounded-[15px] p-1 mb-2'
             />
-            {errors.email && <span>{errors.email}</span>}
+            {errors.email && <span className='text-white'>{errors.email}</span>}
           </div>
           <div className='flex flex-col w-[100%] text-center mb-2'>
             <input
@@ -98,9 +96,9 @@ function MyForm() {
               placeholder='Phone Number'
               className='rounded-[15px] p-1 mb-2'
             />
-            {errors.phone && <span>{errors.phone}</span>}
+            {errors.phone && <span className='text-white'>{errors.phone}</span>}
           </div>
-          <button type="submit" className='uppercase font-bold mt-2'>Submit</button>
+          <button type="submit" className='uppercase font-bold mt-2 text-white'>Submit</button>
         </form>
       </div>
     </div>

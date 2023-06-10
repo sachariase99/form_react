@@ -12,40 +12,59 @@ function useFormValidator(initialState, validationRules) {
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const validationErrors = validate();
-    setErrors(validationErrors);
-    if (Object.keys(validationErrors).length === 0) {
-      // Perform form submission logic here
-      console.log('Form submitted successfully!');
-    }
+  const handleBlur = (e) => {
+    const { name } = e.target;
+    const validationErrors = validateField(name);
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: validationErrors[name],
+    }));
   };
 
-  const validate = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     let validationErrors = {};
     for (const fieldName in validationRules) {
       if (validationRules.hasOwnProperty(fieldName)) {
-        const fieldValue = values[fieldName];
-        const rules = validationRules[fieldName];
-        for (const rule in rules) {
-          if (rules.hasOwnProperty(rule)) {
-            const isValid = rules[rule].validate(fieldValue);
-            if (!isValid) {
-              validationErrors = {
-                ...validationErrors,
-                [fieldName]: rules[rule].message,
-              };
-              break;
-            }
-          }
+        const fieldErrors = validateField(fieldName);
+        if (Object.keys(fieldErrors).length > 0) {
+          validationErrors = {
+            ...validationErrors,
+            ...fieldErrors,
+          };
+          break;
         }
       }
     }
-    return validationErrors;
+    setErrors(validationErrors);
+    if (Object.keys(validationErrors).length === 0) {
+      // Perform form submission logic here
+      alert('Form submitted successfully!');
+      setValues(initialState); // Clear the form values
+      setErrors({}); // Clear the form errors
+    }
   };
 
-  return { values, errors, handleChange, handleSubmit };
+  const validateField = (fieldName) => {
+    const fieldValue = values[fieldName];
+    const rules = validationRules[fieldName];
+    let fieldErrors = {};
+    for (const rule in rules) {
+      if (rules.hasOwnProperty(rule)) {
+        const isValid = rules[rule].validate(fieldValue);
+        if (!isValid) {
+          fieldErrors = {
+            ...fieldErrors,
+            [fieldName]: rules[rule].message,
+          };
+          break;
+        }
+      }
+    }
+    return fieldErrors;
+  };
+
+  return { values, errors, handleChange, handleBlur, handleSubmit };
 }
 
 export default useFormValidator;
