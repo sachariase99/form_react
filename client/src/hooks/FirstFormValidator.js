@@ -1,9 +1,13 @@
 import { useState } from 'react';
 
 function useFormValidator(initialState, validationRules) {
+  // Tilstand for formularværdier
   const [values, setValues] = useState(initialState);
+
+  // Tilstand for fejlmeddelelser
   const [errors, setErrors] = useState({});
 
+  // Håndterer ændring af formularværdier
   const handleChange = (e) => {
     const { name, value } = e.target;
     setValues((prevValues) => ({
@@ -12,6 +16,7 @@ function useFormValidator(initialState, validationRules) {
     }));
   };
 
+  // Håndterer tab af fokus på formularfelter
   const handleBlur = (e) => {
     const { name } = e.target;
     const validationErrors = validateField(name);
@@ -21,9 +26,12 @@ function useFormValidator(initialState, validationRules) {
     }));
   };
 
+  // Håndterer formularindsendelse
   const handleSubmit = (e) => {
     e.preventDefault();
     let validationErrors = {};
+
+    // Validerer hvert formularfelt baseret på valideringsreglerne
     for (const fieldName in validationRules) {
       if (validationRules.hasOwnProperty(fieldName)) {
         const fieldErrors = validateField(fieldName);
@@ -36,19 +44,26 @@ function useFormValidator(initialState, validationRules) {
         }
       }
     }
+
+    // Opdaterer fejltilstanden med de valideringsfejl, der blev fundet
     setErrors(validationErrors);
+
+    // Hvis der ikke er nogen valideringsfejl, udføres formularindsendelseslogikken
     if (Object.keys(validationErrors).length === 0) {
-      // Perform form submission logic here
-      alert('Form submitted successfully!');
-      setValues(initialState); // Clear the form values
-      setErrors({}); // Clear the form errors
+      // Udfør logik for formularindsendelse her
+      alert('Formular indsendt succesfuldt!');
+      setValues(initialState); // Ryd formularværdierne
+      setErrors({}); // Ryd formularfejlene
     }
   };
 
+  // Validerer et specifikt formularfelt baseret på valideringsreglerne
   const validateField = (fieldName) => {
     const fieldValue = values[fieldName];
     const rules = validationRules[fieldName];
     let fieldErrors = {};
+
+    // Gennemgår hver valideringsregel for det specifikke formularfelt
     for (const rule in rules) {
       if (rules.hasOwnProperty(rule)) {
         const isValid = rules[rule].validate(fieldValue);
@@ -61,9 +76,11 @@ function useFormValidator(initialState, validationRules) {
         }
       }
     }
+
     return fieldErrors;
   };
 
+  // Returnerer de nødvendige værdier og funktioner fra hook'en
   return { values, errors, handleChange, handleBlur, handleSubmit };
 }
 

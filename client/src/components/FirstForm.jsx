@@ -2,6 +2,7 @@ import React from 'react';
 import FirstFormValidator from '../hooks/FirstFormValidator';
 
 function MyForm() {
+  // Initialiserer tilstanden for formularværdier
   const initialState = {
     name: '',
     lastName: '',
@@ -9,6 +10,7 @@ function MyForm() {
     phone: '',
   };
 
+  // Definerer valideringsreglerne for hvert formularfelt
   const validationRules = {
     name: {
       required: {
@@ -44,6 +46,7 @@ function MyForm() {
     },
   };
 
+  // Bruger useFormValidator-hook'en til at håndtere formularvalidering
   const { values, errors, handleChange, handleSubmit } = FirstFormValidator(
     initialState,
     validationRules
@@ -52,7 +55,9 @@ function MyForm() {
   return (
     <div className='flex justify-center items-center h-[100vh]'>
       <div className='bg-[#1a1a1a] text-white w-[400px] h-[400px] p-10 rounded-xl'>
+        {/* Overskrift */}
         <h1 className='mb-2 mt-[-30px] text-center text-[2rem] uppercase font-bold'>Form Validering</h1>
+        {/* Formular */}
         <form onSubmit={handleSubmit} className='flex flex-col justify-center items-center h-[100%] text-black'>
           <div className='flex flex-col w-[100%] text-center mb-2'>
             <input
